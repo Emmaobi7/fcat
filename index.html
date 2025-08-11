@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Unified Library — Koha + DSpace</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    :root{--bg:#081229;--card:#0f1724;--accent:#2dd4bf;--muted:#94a3b8;--glass: rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,#051428 0%, #081229 100%);-webkit-font-smoothing:antialiased}
+    .container{max-width:1100px;margin:28px auto;padding:24px}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .brand{color:var(--accent);font-weight:700;letter-spacing:0.6px}
+    h1{font-size:clamp(28px,4.5vw,44px);margin:6px 0 12px;line-height:1.03}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .cta-row{display:flex;gap:12px;align-items:center}
+    .btn{background:linear-gradient(90deg,var(--accent),#60a5fa);padding:12px 18px;border-radius:12px;color:#052025;border:0;cursor:pointer;font-weight:600;box-shadow:0 8px 24px rgba(13,30,52,0.45)}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 16px;border-radius:10px;color:var(--muted);cursor:pointer}
+    .hero-card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+    .mockups{display:flex;gap:12px;flex-wrap:wrap}
+    .mockup{width:200px;height:120px;border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#0b2236,#082036);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
+
+    /* Typewriter small */
+    .typed{color:#e6eef6;font-weight:700}
+
+    /* Sections */
+    section{margin:60px 0 40px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card h3{margin:0 0 8px}
+    .muted{color:var(--muted)}
+
+    /* Tech cards */
+    .tech-row{display:flex;gap:14px}
+    .tech{flex:1;background:linear-gradient(180deg,#021428 0%, #041a2b 100%);padding:16px;border-radius:12px;position:relative;overflow:hidden;cursor:pointer;transition:transform .35s}
+    .tech:hover{transform:translateY(-8px)}
+    .tech .icon{width:58px;height:58px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-weight:700}
+
+    /* Integration SVG */
+    .workflow{display:flex;gap:22px;align-items:center;justify-content:center;padding:24px}
+    .node{background:linear-gradient(180deg,#072435,#052034);padding:16px;border-radius:12px;min-width:160px;text-align:center}
+    .arrow{width:64px;height:24px}
+
+    /* Animated flow */
+    .flow-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 6px 18px rgba(45,212,191,0.15);animation:flow 2s linear infinite}
+    @keyframes flow{0%{transform:translateX(-40px);opacity:0}50%{opacity:1}100%{transform:translateX(40px);opacity:0}}
+
+    /* Flip cards */
+    .flip{perspective:1000px}
+    .flip-inner{transition:transform .6s;transform-style:preserve-3d;position:relative}
+    .flip:hover .flip-inner{transform:rotateY(180deg)}
+    .flip-front,.flip-back{backface-visibility:hidden;border-radius:10px;padding:14px}
+    .flip-back{transform:rotateY(180deg);position:absolute;inset:0;background:#071b2a}
+
+    /* Timeline */
+    .timeline{display:flex;gap:18px;overflow:auto;padding:12px}
+    .step{min-width:200px;background:linear-gradient(180deg,#031527,#082035);padding:16px;border-radius:10px}
+
+    /* Footer */
+    footer{padding:28px 0;color:var(--muted);text-align:center}
+
+    /* Responsive */
+    @media(max-width:880px){.hero{grid-template-columns:1fr;}.mockup{width:48%}.grid-3{grid-template-columns:1fr}.tech-row{flex-direction:column}.timeline{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header data-aos="fade-down">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div class="brand">DCI • Library Solutions</div>
+        <div style="color:var(--muted)">Proposal • Koha + DSpace</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div data-aos="fade-right">
+          <div class="hero-card">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(180deg,#0f1724,#061428);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)">K+D</div>
+              <div>
+                <div class="muted">Unified Library Solution</div>
+                <h1>Transforming <span id="uni-name">FCAT</span> Library into a 21st‑Century Knowledge Hub</h1>
+                <p class="lead">A unified solution combining <strong>Koha</strong> for physical collections and <strong>DSpace</strong> for digital assets — search, manage and preserve academic resources with ease.</p>
+                <div class="cta-row">
+                  <button class="btn" onclick="scrollToSection('plan')">See the Plan</button>
+                  <button class="ghost">Request Demo</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;display:flex;gap:12px;align-items:center">
+              <div style="flex:1">
+                <div style="color:var(--muted);font-size:13px;margin-bottom:8px">Core values</div>
+                <div style="display:flex;gap:10px">
+                  <div class="muted">Scalability</div>
+                  <div class="muted">Open Source</div>
+                  <div class="muted">Secure</div>
+                </div>
+              </div>
+              <div style="width:220px">
+                <div class="mockups">
+                  <div class="mockup">OPAC Preview</div>
+                  <div class="mockup">DSpace Preview</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-aos="fade-left">
+          <div class="hero-card" style="text-align:center">
+            <div style="margin-bottom:12px;color:var(--muted);font-weight:600">Interactive Preview</div>
+            <!-- Lottie animation placeholder -->
+            <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_jcikwtux.json"  background="transparent"  speed="1"  style="width:100%;height:220px;"  loop  autoplay></lottie-player>
+            <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
+              <button class="ghost">View Mockups</button>
+              <button class="ghost">Technical Specs</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vision -->
+      <section data-aos="fade-up">
+        <div class="card">
+          <h2>The Vision</h2>
+          <p class="muted">A smarter, connected library experience that gives students and staff instant access to both physical books and digital research outputs — properly managed, preserved and easy to discover.</p>
+        </div>
+      </section>
+
+      <!-- Tech stack -->
+      <section data-aos="fade-up" id="tech">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <h2>Technology Overview</h2>
+          <div class="muted">Open-source, scalable & customizable</div>
+        </div>
+
+        <div class="tech-row">
+          <div class="tech card flip" data-aos="zoom-in">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div style="display:flex;gap:12px;align-items:center">
+                  <div class="icon">K</div>
+                  <div>
+                    <h3>Koha — ILS</h3>
+                    <div class="muted">Cataloging • Circulation • OPAC • Reports</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px" class="muted">Trusted ILS for handling physical collections with role-based access and detailed reporting.</div>
+              </div>
+              <div class="flip-back">
+                <h3>Why Koha?</h3>
+                <ul class="muted" style="padding-left:16px;margin-top:8px">
+                  <li>Full-featured catalog & circulation</li>
+                  <li>Customizable OPAC UI</li>
+                  <li>Active community & support</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tech card flip" data-aos="zoom-in" style="transition-delay:.08s">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div style="display:flex;gap:12px;align-items:center">
+                  <div class="icon">D</div>
+                  <div>
+                    <h3>DSpace — Repository</h3>
+                    <div class="muted">Theses • Research • Datasets • Preservation</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px" class="muted">Long-term preservation for institutional research outputs with flexible access controls.</div>
+              </div>
+              <div class="flip-back">
+                <h3>Why DSpace?</h3>
+                <ul class="muted" style="padding-left:16px;margin-top:8px">
+                  <li>Stable repository framework</li>
+                  <li>OAI-PMH & metadata support</li>
+                  <li>Integration-ready APIs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tech card" data-aos="zoom-in" style="transition-delay:.16s">
+            <h3>Discovery Layer</h3>
+            <div class="muted">Unified search (e.g., VuFind / Blacklight) that indexes both Koha & DSpace so users search once and get everything.</div>
+            <div style="margin-top:12px" class="muted">We propose metadata harvesting via OAI-PMH + API sync for near-real-time results.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Integration workflow -->
+      <section data-aos="fade-up">
+        <h2>Integration Workflow</h2>
+        <div class="workflow">
+          <div class="node card">
+            <strong>Physical Collections</strong>
+            <div class="muted">Acquisitions • Cataloging • Circulation</div>
+            <div style="margin-top:10px"><small class="muted">Koha</small></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <svg class="arrow" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 10 H80" stroke="#0ea5a3" stroke-width="2" stroke-opacity="0.9" fill="none"/>
+              <circle cx="40" cy="10" r="4" fill="#2dd4bf">
+                <animate attributeName="cx" values="20;60" dur="2s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            <div class="flow-dot"></div>
+          </div>
+
+          <div class="node card">
+            <strong>Discovery Layer</strong>
+            <div class="muted">Unified index • Search API • Re-ranking</div>
+            <div style="margin-top:10px"><small class="muted">VuFind / Custom</small></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <svg class="arrow" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 10 H80" stroke="#0ea5a3" stroke-width="2" stroke-opacity="0.9" fill="none"/>
+              <circle cx="40" cy="10" r="4" fill="#2dd4bf">
+                <animate attributeName="cx" values="20;60" dur="2s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            <div class="flow-dot"></div>
+          </div>
+
+          <div class="node card">
+            <strong>Digital Repository</strong>
+            <div class="muted">Research outputs • Long-term storage • DOI support</div>
+            <div style="margin-top:10px"><small class="muted">DSpace</small></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits -->
+      <section data-aos="fade-up">
+        <h2>Key Benefits</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Easy Search</h3>
+            <div class="muted">One search, all resources — students get results from the OPAC and repository in one place.</div>
+          </div>
+          <div class="card">
+            <h3>Secure Access</h3>
+            <div class="muted">Role-based permissions for staff, students and external researchers.</div>
+          </div>
+          <div class="card">
+            <h3>Analytics</h3>
+            <div class="muted">Usage statistics and reporting for smarter collection development.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Implementation plan / timeline -->
+      <section id="plan" data-aos="fade-up">
+        <h2>Implementation Plan</h2>
+        <div class="timeline">
+          <div class="step card">
+            <strong>Phase 1 — Setup</strong>
+            <div class="muted">Requirements, server provisioning, initial installation.</div>
+            <div style="margin-top:8px" class="muted">~ 1–2 weeks</div>
+          </div>
+          <div class="step card">
+            <strong>Phase 2 — Customization</strong>
+            <div class="muted">Branding, metadata mapping, UI tweaks.</div>
+            <div style="margin-top:8px" class="muted">~ 1 week</div>
+          </div>
+          <div class="step card">
+            <strong>Phase 3 — Integration</strong>
+            <div class="muted">Discovery layer, API sync, OAI-PMH harvesting.</div>
+            <div style="margin-top:8px" class="muted">~ 1 week</div>
+          </div>
+          <div class="step card">
+            <strong>Phase 4 — Training & Handover</strong>
+            <div class="muted">Staff training, documentation, SLA setup.</div>
+            <div style="margin-top:8px" class="muted">3 days</div>
+          </div>
+        </div>
+        <div style="margin-top:12px" class="muted">Estimated full delivery time: <strong>3–5 weeks</strong> depending on scope and data migration needs.</div>
+      </section>
+
+      <!-- CTA -->
+      <section data-aos="fade-up">
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <h3>Ready to get started?</h3>
+            <div class="muted">We’ll provision, configure and hand over with training or manage your library fully under a support contract.</div>
+          </div>
+          <!-- <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <button class="btn">Request a Demo</button>
+            <div class="muted">Contact: <strong>+234 8xx xxx xxxx</strong> • <strong>hello@jaktechhub.com</strong></div>
+          </div> -->
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div class="muted">Prepared by JakTech Hub — Proposal for Koha & DSpace integration.</div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script>
+    AOS.init({duration:700,easing:'ease-out-cubic',once:true});
+
+    // Typed.js small effect
+    new Typed('.typed',{
+      strings:['Accessible','Intelligent','Unified','Preserved'],
+      typeSpeed:80,backSpeed:40,backDelay:1200,loop:true
+    });
+
+    // Small helper
+    function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+    // Quick customization helper - replace university name easily
+    (function(){
+      const el = document.getElementById('uni-name');
+      const stored = new URLSearchParams(location.search).get('school');
+      if(stored) el.textContent = decodeURIComponent(stored);
+      else el.textContent = '[University Name]';
+    })();
+  </script>
+</body>
+</html>
