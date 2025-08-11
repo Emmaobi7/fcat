@@ -6,22 +6,25 @@
   <title>Unified Library — Koha + DSpace</title>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
-    :root{--bg:#081229;--card:#0f1724;--accent:#2dd4bf;--muted:#94a3b8;--glass: rgba(255,255,255,0.03)}
+    :root{--bg:#031128;--card:#071428;--accent:#2dd4bf;--muted:#9fb0c8;--glass: rgba(255,255,255,0.03)}
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,#051428 0%, #081229 100%);-webkit-font-smoothing:antialiased}
-    .container{max-width:1100px;margin:28px auto;padding:24px}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:radial-gradient(1200px 600px at 10% 10%, rgba(32,58,92,0.18), transparent), linear-gradient(180deg,#021027 0%, #031128 100%);-webkit-font-smoothing:antialiased}
+    .container{max-width:1200px;margin:28px auto;padding:24px}
+
+    /* Particle background */
+    #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 
     /* Hero */
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .hero{position:relative;z-index:1;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
     .brand{color:var(--accent);font-weight:700;letter-spacing:0.6px}
-    h1{font-size:clamp(28px,4.5vw,44px);margin:6px 0 12px;line-height:1.03}
+    h1{font-size:clamp(28px,4.5vw,44px);margin:6px 0 12px;line-height:1.03;background:linear-gradient(90deg,#9be7df,#a3b8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
     p.lead{color:var(--muted);margin:0 0 18px}
     .cta-row{display:flex;gap:12px;align-items:center}
-    .btn{background:linear-gradient(90deg,var(--accent),#60a5fa);padding:12px 18px;border-radius:12px;color:#052025;border:0;cursor:pointer;font-weight:600;box-shadow:0 8px 24px rgba(13,30,52,0.45)}
+    .btn{background:linear-gradient(90deg,var(--accent),#60a5fa);padding:12px 18px;border-radius:12px;color:#052025;border:0;cursor:pointer;font-weight:600;box-shadow:0 8px 30px rgba(45,212,191,0.08)}
     .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 16px;border-radius:10px;color:var(--muted);cursor:pointer}
-    .hero-card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:16px;padding:18px;box-shadow:0 16px 50px rgba(2,6,23,0.6);backdrop-filter:blur(6px)}
     .mockups{display:flex;gap:12px;flex-wrap:wrap}
-    .mockup{width:200px;height:120px;border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#0b2236,#082036);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
+    .mockup{width:200px;height:120px;border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#08223b,#061a2b);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
 
     /* Typewriter small */
     .typed{color:#e6eef6;font-weight:700}
@@ -35,9 +38,9 @@
 
     /* Tech cards */
     .tech-row{display:flex;gap:14px}
-    .tech{flex:1;background:linear-gradient(180deg,#021428 0%, #041a2b 100%);padding:16px;border-radius:12px;position:relative;overflow:hidden;cursor:pointer;transition:transform .35s}
-    .tech:hover{transform:translateY(-8px)}
-    .tech .icon{width:58px;height:58px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .tech{flex:1;background:linear-gradient(180deg,#041a2b 0%, #051428 100%);padding:16px;border-radius:12px;position:relative;overflow:hidden;cursor:pointer;transition:transform .35s,box-shadow .35s}
+    .tech:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(14,165,163,0.07)}
+    .tech .icon{width:58px;height:58px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent);display:flex;align-items:center;justify-content:center;font-weight:700}
 
     /* Integration SVG */
     .workflow{display:flex;gap:22px;align-items:center;justify-content:center;padding:24px}
@@ -53,23 +56,43 @@
     .flip-inner{transition:transform .6s;transform-style:preserve-3d;position:relative}
     .flip:hover .flip-inner{transform:rotateY(180deg)}
     .flip-front,.flip-back{backface-visibility:hidden;border-radius:10px;padding:14px}
-    .flip-back{transform:rotateY(180deg);position:absolute;inset:0;background:#071b2a}
+    .flip-back{transform:rotateY(180deg);position:absolute;inset:0;background:linear-gradient(180deg,#061728,#041022)}
 
     /* Timeline */
     .timeline{display:flex;gap:18px;overflow:auto;padding:12px}
-    .step{min-width:200px;background:linear-gradient(180deg,#031527,#082035);padding:16px;border-radius:10px}
+    .step{min-width:200px;background:linear-gradient(180deg,#021627,#041a2a);padding:16px;border-radius:10px}
 
-    /* Footer */
-    footer{padding:28px 0;color:var(--muted);text-align:center}
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(1,6,12,0.6);display:flex;align-items:center;justify-content:center;z-index:120}
+    .modal{background:linear-gradient(180deg,#061226,#07182c);padding:20px;border-radius:12px;max-width:900px;width:92%;box-shadow:0 20px 80px rgba(2,6,23,0.7)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .close-btn{background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:18px}
+    .mock-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .mock-grid img{width:100%;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
+
+    /* Login highlight */
+    .login-note{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(45,212,191,0.05),transparent);border:1px solid rgba(45,212,191,0.06)}
+    .lock{width:44px;height:44px;border-radius:8px;background:linear-gradient(90deg,#032f3a,#083a45);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+
+    /* Animated heading gradient */
+    .grad-title{background:linear-gradient(90deg,#6ee7b7,#60a5fa,#a78bfa);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:slide 6s linear infinite}
+    @keyframes slide{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    /* CTA pulse */
+    .pulse{animation:pulse 2.6s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(45,212,191,0.22)}70%{box-shadow:0 0 0 12px rgba(45,212,191,0)}100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}}
 
     /* Responsive */
-    @media(max-width:880px){.hero{grid-template-columns:1fr;}.mockup{width:48%}.grid-3{grid-template-columns:1fr}.tech-row{flex-direction:column}.timeline{flex-direction:column}}
+    @media(max-width:880px){.hero{grid-template-columns:1fr;}.mockup{width:48%}.grid-3{grid-template-columns:1fr}.tech-row{flex-direction:column}.timeline{flex-direction:column}.mock-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
+  <!-- Particles canvas -->
+  <canvas id="particles"></canvas>
+
   <div class="container">
     <header data-aos="fade-down">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;position:relative;z-index:2">
         <div class="brand">DCI • Library Solutions</div>
         <div style="color:var(--muted)">Proposal • Koha + DSpace</div>
       </div>
@@ -80,14 +103,15 @@
         <div data-aos="fade-right">
           <div class="hero-card">
             <div style="display:flex;align-items:center;gap:12px">
-              <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(180deg,#0f1724,#061428);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)">K+D</div>
+              <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(180deg,#052a3a,#01303e);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)">K+D</div>
               <div>
                 <div class="muted">Unified Library Solution</div>
-                <h1>Transforming <span id="uni-name">FCAT</span> Library into a 21st‑Century Knowledge Hub</h1>
+                <h1 class="grad-title">Transforming <span id="uni-name">FCAT</span> Library into a 21st‑Century Knowledge Hub</h1>
                 <p class="lead">A unified solution combining <strong>Koha</strong> for physical collections and <strong>DSpace</strong> for digital assets — search, manage and preserve academic resources with ease.</p>
                 <div class="cta-row">
-                  <button class="btn" onclick="scrollToSection('plan')">See the Plan</button>
-                  <button class="ghost">Request Demo</button>
+                  <button class="btn pulse" id="see-plan">See the Plan</button>
+                  <button class="ghost" id="open-mockups">View Mockups</button>
+                  <button class="ghost" id="open-specs">Technical Specs</button>
                 </div>
               </div>
             </div>
@@ -95,10 +119,11 @@
             <div style="margin-top:20px;display:flex;gap:12px;align-items:center">
               <div style="flex:1">
                 <div style="color:var(--muted);font-size:13px;margin-bottom:8px">Core values</div>
-                <div style="display:flex;gap:10px">
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
                   <div class="muted">Scalability</div>
                   <div class="muted">Open Source</div>
-                  <div class="muted">Secure</div>
+                  <div class="muted">Secure Access</div>
+                  <div class="muted">Preservation</div>
                 </div>
               </div>
               <div style="width:220px">
@@ -117,8 +142,8 @@
             <!-- Lottie animation placeholder -->
             <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_jcikwtux.json"  background="transparent"  speed="1"  style="width:100%;height:220px;"  loop  autoplay></lottie-player>
             <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
-              <button class="ghost">View Mockups</button>
-              <button class="ghost">Technical Specs</button>
+              <button class="ghost" id="view-mockups-ghost">View Mockups</button>
+              <button class="ghost" id="view-specs-ghost">Technical Specs</button>
             </div>
           </div>
         </div>
@@ -129,6 +154,39 @@
         <div class="card">
           <h2>The Vision</h2>
           <p class="muted">A smarter, connected library experience that gives students and staff instant access to both physical books and digital research outputs — properly managed, preserved and easy to discover.</p>
+        </div>
+      </section>
+
+      <!-- Features with login note -->
+      <section data-aos="fade-up">
+        <h2>Features & Security</h2>
+        <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:2;min-width:320px" class="card">
+            <h3>Secure Student Access</h3>
+            <div class="login-note" style="margin-top:8px">
+              <div class="lock">🔒</div>
+              <div>
+                <div style="font-weight:700">Students login securely</div>
+                <div class="muted">Students will authenticate using their library registration credentials (single-sign-on with university accounts can be supported). All access is role-based and encrypted in transit.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px">
+              <h4>Security Highlights</h4>
+              <ul class="muted" style="padding-left:16px">
+                <li>HTTPS everywhere & TLS enforced</li>
+                <li>Role-based access control for staff & students</li>
+                <li>Account lockout & audit logging</li>
+                <li>Regular backups & repository preservation policies</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:280px" class="card">
+            <h3>What makes this different?</h3>
+            <div class="muted">A modern UX, unified discovery across physical and digital content, and a support-first approach with options for full managed hosting or handover with training.</div>
+            <div style="margin-top:12px" class="muted"><strong>Estimated delivery:</strong> 3–5 weeks</div>
+          </div>
         </div>
       </section>
 
@@ -285,16 +343,16 @@
         <div style="margin-top:12px" class="muted">Estimated full delivery time: <strong>3–5 weeks</strong> depending on scope and data migration needs.</div>
       </section>
 
-      <!-- CTA -->
+      <!-- CTA - removed contact per request -->
       <section data-aos="fade-up">
         <div class="card" style="display:flex;justify-content:space-between;align-items:center">
           <div>
             <h3>Ready to get started?</h3>
-            <div class="muted">We’ll provision, configure and hand over with training or manage your library fully under a support contract.</div>
+            <div class="muted">We’ll provision, configure and hand over with training — or manage your library fully under a support contract.</div>
           </div>
           <!-- <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-            <button class="btn">Request a Demo</button>
-            <div class="muted">Contact: <strong>+234 8xx xxx xxxx</strong> • <strong>hello@jaktechhub.com</strong></div>
+            <button class="btn pulse" id="request-demo">Request a Demo</button>
+            <div class="muted">&nbsp;</div>
           </div> -->
         </div>
       </section>
@@ -302,9 +360,12 @@
     </main>
 
     <footer>
-      <div class="muted">Prepared by JakTech Hub — Proposal for Koha & DSpace integration.</div>
+      <div class="muted">Prepared by DCI — Proposal for Koha & DSpace integration.</div>
     </footer>
   </div>
+
+  <!-- Modals (hidden by default) -->
+  <div id="modal-root"></div>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -329,6 +390,83 @@
       if(stored) el.textContent = decodeURIComponent(stored);
       else el.textContent = '[University Name]';
     })();
+
+    // Simple modal system
+    const modalRoot = document.getElementById('modal-root');
+    function openModal(html){
+      const wrap = document.createElement('div'); wrap.className='modal-backdrop';
+      wrap.innerHTML = `<div class="modal">${html}<div style="text-align:right;margin-top:12px"><button class="close-btn" onclick="closeModal(this)">Close</button></div></div>`;
+      modalRoot.appendChild(wrap);
+    }
+    function closeModal(btn){
+      const wrap = btn.closest('.modal-backdrop'); if(wrap) wrap.remove();
+    }
+
+    // Mockup images - placeholders (replace these URLs with real screenshots if you want)
+    const kohaImg = 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=60';
+    const dspaceImg = 'https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=60';
+
+    document.getElementById('open-mockups').addEventListener('click',()=>{
+      const html = `
+        <div class="modal-header"><strong>System Mockups</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+        <div class="mock-grid">
+          <img src="${kohaImg}" alt="Koha mockup" />
+          <img src="${dspaceImg}" alt="DSpace mockup" />
+        </div>
+        <div style="margin-top:10px" class="muted">These mockups show example OPAC and repository screens. Replace with actual screenshots for final presentation.</div>
+      `;
+      openModal(html);
+    });
+
+    document.getElementById('open-specs').addEventListener('click',()=>{
+      const html = `
+        <div class="modal-header"><strong>Technical Specs & Integration Notes</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <h4>Platform Stack</h4>
+            <ul class="muted" style="padding-left:16px">
+              <li>Koha (Perl & MySQL)</li>
+              <li>DSpace (Java, PostgreSQL/Oracle)</li>
+              <li>Discovery Layer: VuFind / Custom Elastic layer</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Integration</h4>
+            <ul class="muted" style="padding-left:16px">
+              <li>Metadata harvesting via OAI-PMH</li>
+              <li>API-based cross-linking for OPAC & repository</li>
+              <li>Synchronized authentication (LDAP/SAML/SSO optional)</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <h4>Security Plan</h4>
+          <div class="muted">Encryption in transit (TLS), role-based access, audit logging, backups, and staff training on access policies.</div>
+        </div>
+      `;
+      openModal(html);
+    });
+
+    // hero ghost buttons
+    document.getElementById('view-mockups-ghost').addEventListener('click',()=>document.getElementById('open-mockups').click());
+    document.getElementById('view-specs-ghost').addEventListener('click',()=>document.getElementById('open-specs').click());
+
+    // Request demo - just opens specs modal for now
+    document.getElementById('request-demo').addEventListener('click',()=>{
+      const html = `<div class="modal-header"><strong>Request a Demo</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div><div class="muted">We can schedule a live demo and walkthrough. If you'd like, replace this with a scheduling link or form.</div>`;
+      openModal(html);
+    });
+
+    // Particles simple script (lightweight)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w=canvas.width=innerWidth, h=canvas.height=innerHeight; const particles=[]; for(let i=0;i<60;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+0.6,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3});
+    function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+    addEventListener('resize',resize);
+    function draw(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.dx;p.y+=p.dy; if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0; ctx.beginPath();ctx.fillStyle='rgba(45,212,191,0.06)';ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(draw);}draw();
+
+    // Small helper to replace mockup placeholders with real screenshot URLs quickly via query params
+    (function(){const ko = new URLSearchParams(location.search).get('koha'); const ds = new URLSearchParams(location.search).get('dspace'); if(ko) document.querySelectorAll('img[alt="Koha mockup"]').forEach(i=>i.src=decodeURIComponent(ko)); if(ds) document.querySelectorAll('img[alt="DSpace mockup"]').forEach(i=>i.src=decodeURIComponent(ds));})();
   </script>
 </body>
 </html>
