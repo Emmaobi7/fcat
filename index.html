@@ -405,148 +405,225 @@
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <script>
-    AOS.init({duration:700,easing:'ease-out-cubic',once:true});
+    // Error diagnostics: show any JS error visibly on the page
+    window.onerror = function(msg, url, line, col, error) {
+      var errBox = document.createElement('div');
+      errBox.style = 'position:fixed;bottom:0;left:0;right:0;background:#e11d48;color:#fff;padding:10px 18px;z-index:9999;font-size:16px;font-family:monospace';
+      errBox.textContent = 'JS Error: ' + msg + ' at ' + url + ':' + line + ':' + col;
+      document.body.appendChild(errBox);
+      return false;
+    };
 
-    // Typed.js small effect
-    new Typed('.typed',{
-      strings:['Accessible','Intelligent','Unified','Preserved'],
-      typeSpeed:80,backSpeed:40,backDelay:1200,loop:true
-    });
-
-    // Small helper
-    function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
-
-    // Quick customization helper - replace university name easily
-    (function(){
-      const el = document.getElementById('uni-name');
-      const stored = new URLSearchParams(location.search).get('school');
-      if(stored) el.textContent = decodeURIComponent(stored);
-      else el.textContent = '[University Name]';
-    })();
-
-    // Simple modal system
-    const modalRoot = document.getElementById('modal-root');
-    function openModal(html){
-      const wrap = document.createElement('div'); wrap.className='modal-backdrop';
-      wrap.innerHTML = `<div class="modal">${html}<div style="text-align:right;margin-top:12px"><button class="close-btn" onclick="closeModal(this)">Close</button></div></div>`;
-      modalRoot.appendChild(wrap);
-    }
-    function closeModal(btn){
-      const wrap = btn.closest('.modal-backdrop'); if(wrap) wrap.remove();
-    }
-
-    // Mockup images - placeholders (replace these URLs with real screenshots if you want)
-    const kohaImg = 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=60';
-    const dspaceImg = 'https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=60';
-
-      // Feature modals for upcoming features
-      document.getElementById('ai-assistant-btn').addEventListener('click',()=>{
-        openModal(`
-          <div class="modal-header"><strong>AI Research Assistant</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-          <div class="muted">Instant research help, summaries, and recommendations powered by AI. Ask questions, get topic suggestions, and accelerate your studies.</div>
-          <div style="margin-top:12px"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60" style="width:100%;border-radius:8px" alt="AI assistant preview"></div>
-        `);
-      });
-      document.getElementById('gamification-btn').addEventListener('click',()=>{
-        openModal(`
-          <div class="modal-header"><strong>Gamification & Achievements</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-          <div class="muted">Earn badges and rewards for reading, research, and participation. Track your progress and compete with friends!</div>
-          <div style="margin-top:12px"><img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=60" style="width:100%;border-radius:8px" alt="Gamification preview"></div>
-        `);
-      });
-      document.getElementById('review-btn').addEventListener('click',()=>{
-        openModal(`
-          <div class="modal-header"><strong>Student Review System</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-          <div class="muted">Leave feedback, rate resources, and help others discover quality content. See top-rated books and research papers.</div>
-          <div style="margin-top:12px"><img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=60" style="width:100%;border-radius:8px" alt="Review system preview"></div>
-        `);
-      });
-      document.getElementById('notes-btn').addEventListener('click',()=>{
-        openModal(`
-          <div class="modal-header"><strong>Digital Notes & Export</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-          <div class="muted">Take notes while studying, organize them, and export to PDF or Word. Your notes are always accessible and safe.</div>
-          <div style="margin-top:12px"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60" style="width:100%;border-radius:8px" alt="Notes preview"></div>
-        `);
-      });
-      document.getElementById('offline-btn').addEventListener('click',()=>{
-        openModal(`
-          <div class="modal-header"><strong>Offline Usage</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-          <div class="muted">Access key resources and your notes even without internet. Study anywhere, anytime.</div>
-          <div style="margin-top:12px"><img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=60" style="width:100%;border-radius:8px" alt="Offline usage preview"></div>
-        `);
-      });
-
-    document.getElementById('open-mockups').addEventListener('click',()=>{
-      const html = `
-        <div class="modal-header"><strong>System Mockups</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-        <div class="mock-grid">
-          <img src="${kohaImg}" alt="Koha mockup" />
-          <img src="${dspaceImg}" alt="DSpace mockup" />
-        </div>
-        <div style="margin-top:10px" class="muted">These mockups show example OPAC and repository screens. Replace with actual screenshots for final presentation.</div>
-      `;
-      openModal(html);
-    });
-
-    document.getElementById('open-specs').addEventListener('click',()=>{
-      const html = `
-        <div class="modal-header"><strong>Technical Specs & Integration Notes</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div>
-            <h4>Platform Stack</h4>
-            <ul class="muted" style="padding-left:16px">
-              <li>Koha (Perl & MySQL)</li>
-              <li>DSpace (Java, PostgreSQL/Oracle)</li>
-              <li>Discovery Layer: VuFind / Custom Elastic layer</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Integration</h4>
-            <ul class="muted" style="padding-left:16px">
-              <li>Metadata harvesting via OAI-PMH</li>
-              <li>API-based cross-linking for OPAC & repository</li>
-              <li>Synchronized authentication (LDAP/SAML/SSO optional)</li>
-            </ul>
-          </div>
-        </div>
-        <div style="margin-top:12px">
-          <h4>Security Plan</h4>
-          <div class="muted">Encryption in transit (TLS), role-based access, audit logging, backups, and staff training on access policies.</div>
-        </div>
-      `;
-      openModal(html);
-    });
-
-    // Ensure ghost buttons work after DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
-      var ghostMockups = document.getElementById('view-mockups-ghost');
-      var ghostSpecs = document.getElementById('view-specs-ghost');
-      var openMockups = document.getElementById('open-mockups');
-      var openSpecs = document.getElementById('open-specs');
-      if (ghostMockups && openMockups) {
-        ghostMockups.addEventListener('click', function() { openMockups.click(); });
+      // Make 'See the Plan' button scroll to Implementation Plan section
+      var seePlanBtn = document.getElementById('see-plan');
+      if (seePlanBtn) {
+        seePlanBtn.onclick = function() {
+          window.scrollToSection('plan');
+        };
       }
-      if (ghostSpecs && openSpecs) {
-        ghostSpecs.addEventListener('click', function() { openSpecs.click(); });
+      // Self-test: show a green bar if JS is running
+      var okBox = document.createElement('div');
+      okBox.style = 'position:fixed;top:0;left:0;right:0;background:#22c55e;color:#fff;padding:6px 18px;z-index:9999;font-size:15px;font-family:monospace;text-align:center';
+      okBox.textContent = 'JS loaded: All buttons should work.';
+      document.body.appendChild(okBox);
+      setTimeout(function(){okBox.remove();}, 3000);
+
+      try {
+        AOS.init({duration:700,easing:'ease-out-cubic',once:true});
+
+        // Typed.js small effect (only if .typed exists)
+        var typedEl = document.querySelector('.typed');
+        if (typedEl) {
+          new Typed('.typed',{
+            strings:['Accessible','Intelligent','Unified','Preserved'],
+            typeSpeed:80,backSpeed:40,backDelay:1200,loop:true
+          });
+        }
+
+        // Small helper
+        window.scrollToSection = function(id){
+          var el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({behavior:'smooth',block:'start'});
+          }
+        }
+
+        // Quick customization helper - replace university name easily
+        function setUniversityName() {
+          const el = document.getElementById('uni-name');
+          const stored = new URLSearchParams(location.search).get('school');
+          if(stored) el.textContent = decodeURIComponent(stored);
+          else el.textContent = '[University Name]';
+        }
+        setUniversityName();
+
+        // Simple modal system
+        const modalRoot = document.getElementById('modal-root');
+        window.openModal = function(html){
+          const wrap = document.createElement('div'); wrap.className='modal-backdrop';
+          wrap.innerHTML = `<div class="modal">${html}<div style="text-align:right;margin-top:12px"><button class="close-btn" onclick="closeModal(this)">Close</button></div></div>`;
+          modalRoot.appendChild(wrap);
+        }
+        window.closeModal = function(btn){
+          const wrap = btn.closest('.modal-backdrop'); if(wrap) wrap.remove();
+        }
+
+        // Mockup images - placeholders (replace these URLs with real screenshots if you want)
+        const kohaImg = 'https://koha-community.org/manual/23.05/en/html/_images/opacregionsbootstrap.png';
+        const dspaceImg = 'https://wiki.lyrasis.org/download/attachments/104567167/Screenshot%202018-10-29%20at%2014.48.49.png?version=2&modificationDate=1540817390652&api=v2';
+
+        // Helper to robustly attach modal to any button by id
+        function attachModalBtn(id, html) {
+          var btn = document.getElementById(id);
+          if (btn) {
+            btn.onclick = function(){ openModal(html); };
+          }
+        }
+
+        // Feature modals for upcoming features
+        attachModalBtn('ai-assistant-btn', `
+          <div class="modal-header"><strong>AI Research Assistant</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="muted">Students can chat with an AI (like a librarian) that searches both physical books (Koha) and digital content (DSpace).
+
+They can ask natural language questions and get summarized answers plus direct links to materials.
+
+Could even recommend similar books, research papers, and authors.</div>
+            <img src="https://hessian.ai/wp-content/uploads/2023/10/Design-ohne-Titel-1.jpg" style="width:100%;border-radius:8px" alt="AI assistant preview">
+          </div>
+        `);
+        attachModalBtn('gamification-btn', `
+          <div class="modal-header"><strong>Gamification & Achievements</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="muted">Students earn badges for reading milestones, attending workshops, or submitting reviews.
+
+Could boost library engagement.
+
+</div>
+            <img src="https://img.freepik.com/free-vector/trophy-flat-style_78370-3222.jpg?semt=ais_hybrid&w=740&q=80" style="width:100%;border-radius:8px" alt="Gamification preview">
+          </div>
+        `);
+        attachModalBtn('review-btn', `
+          <div class="modal-header"><strong>Student Review System</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="muted">Leave feedback, rate resources, and help others discover quality content. See top-rated books and research papers.</div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnP3yq0xcdjD76EZmLGAElpqEWs6V8rJjD6w&s" style="width:100%;border-radius:8px" alt="Review system preview">
+          </div>
+        `);
+        attachModalBtn('notes-btn', `
+          <div class="modal-header"><strong>Digital Notes & Export</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="muted">Take notes while studying, organize them, and export to PDF or Word. Your notes are always accessible and safe.
+              Students can save searches, highlight text in e-books, and add personal notes.
+
+Notes are stored in their account and can be exported later.</div>
+            <img src="https://i.pinimg.com/736x/d3/fd/de/d3fddeeac854bff9b0a253e3a75202a8.jpg" style="width:100%;border-radius:8px" alt="Notes preview">
+          </div>
+        `);
+        attachModalBtn('offline-btn', `
+          <div class="modal-header"><strong>Offline Usage</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="muted">Mobile-friendly offline access for students with low or no internet.
+
+Syncs once they reconnect.</div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_XFzWwhbUSr3YgaDxbPOH_CLqleKNiO8ARw&s" style="width:100%;border-radius:8px" alt="Offline usage preview">
+          </div>
+        `);
+
+        // Main mockups/specs buttons
+        attachModalBtn('open-mockups', `
+          <div class="modal-header"><strong>System Mockups</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div class="mock-grid">
+            <img src="${kohaImg}" alt="Koha mockup" />
+            <img src="${dspaceImg}" alt="DSpace mockup" />
+          </div>
+          <div style="margin-top:10px" class="muted">These mockups show example OPAC and repository screens.</div>
+        `);
+        attachModalBtn('open-specs', `
+          <div class="modal-header"><strong>Technical Specs & Integration Notes</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <h4>Platform Stack</h4>
+              <ul class="muted" style="padding-left:16px">
+                <li>Koha (Perl & MySQL)</li>
+                <li>DSpace (Java, PostgreSQL/Oracle)</li>
+                <li>Discovery Layer: VuFind / Custom Elastic layer</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Integration</h4>
+              <ul class="muted" style="padding-left:16px">
+                <li>Metadata harvesting via OAI-PMH</li>
+                <li>API-based cross-linking for OPAC & repository</li>
+                <li>Synchronized authentication (LDAP/SAML/SSO optional)</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <h4>Security Plan</h4>
+            <div class="muted">Encryption in transit (TLS), role-based access, audit logging, backups, and staff training on access policies.</div>
+          </div>
+        `);
+
+        // Ghost buttons always open modals directly
+        attachModalBtn('view-mockups-ghost', `
+          <div class="modal-header"><strong>System Mockups</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div class="mock-grid">
+            <img src="${kohaImg}" alt="Koha mockup" />
+            <img src="${dspaceImg}" alt="DSpace mockup" />
+          </div>
+          <div style="margin-top:10px" class="muted">These mockups show example OPAC and repository screens.</div>
+        `);
+        attachModalBtn('view-specs-ghost', `
+          <div class="modal-header"><strong>Technical Specs & Integration Notes</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <h4>Platform Stack</h4>
+              <ul class="muted" style="padding-left:16px">
+                <li>Koha (Perl & MySQL)</li>
+                <li>DSpace (Java, PostgreSQL/Oracle)</li>
+                <li>Discovery Layer: VuFind / Custom Elastic layer</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Integration</h4>
+              <ul class="muted" style="padding-left:16px">
+                <li>Metadata harvesting via OAI-PMH</li>
+                <li>API-based cross-linking for OPAC & repository</li>
+                <li>Synchronized authentication (LDAP/SAML/SSO optional)</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <h4>Security Plan</h4>
+            <div class="muted">Encryption in transit (TLS), role-based access, audit logging, backups, and staff training on access policies.</div>
+          </div>
+        `);
+
+        // Request demo - just opens specs modal for now
+        attachModalBtn('request-demo', `<div class="modal-header"><strong>Request a Demo</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div><div class="muted">We can schedule a live demo and walkthrough. If you'd like, replace this with a scheduling link or form.</div>`);
+
+        // Particles simple script (lightweight)
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let w=canvas.width=innerWidth, h=canvas.height=innerHeight; const particles=[]; for(let i=0;i<60;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+0.6,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3});
+        function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+        addEventListener('resize',resize);
+        function draw(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.dx;p.y+=p.dy; if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0; ctx.beginPath();ctx.fillStyle='rgba(45,212,191,0.06)';ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(draw);}draw();
+
+        // Small helper to replace mockup placeholders with real screenshot URLs quickly via query params
+        function replaceMockupPlaceholders() {
+          const ko = new URLSearchParams(location.search).get('koha');
+          const ds = new URLSearchParams(location.search).get('dspace');
+          if(ko) document.querySelectorAll('img[alt="Koha mockup"]').forEach(function(i){i.src=decodeURIComponent(ko);});
+          if(ds) document.querySelectorAll('img[alt="DSpace mockup"]').forEach(function(i){i.src=decodeURIComponent(ds);});
+        }
+        replaceMockupPlaceholders();
+      } catch(e) {
+        window.onerror(e.message, e.fileName || '', e.lineNumber || 0, e.columnNumber || 0, e);
       }
     });
-
-    // Request demo - just opens specs modal for now
-    document.getElementById('request-demo').addEventListener('click',()=>{
-      const html = `<div class="modal-header"><strong>Request a Demo</strong><button class="close-btn" onclick="closeModal(this)">✕</button></div><div class="muted">We can schedule a live demo and walkthrough. If you'd like, replace this with a scheduling link or form.</div>`;
-      openModal(html);
-    });
-
-    // Particles simple script (lightweight)
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let w=canvas.width=innerWidth, h=canvas.height=innerHeight; const particles=[]; for(let i=0;i<60;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+0.6,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3});
-    function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
-    addEventListener('resize',resize);
-    function draw(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.dx;p.y+=p.dy; if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0; ctx.beginPath();ctx.fillStyle='rgba(45,212,191,0.06)';ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(draw);}draw();
-
-    // Small helper to replace mockup placeholders with real screenshot URLs quickly via query params
-    (function(){const ko = new URLSearchParams(location.search).get('koha'); const ds = new URLSearchParams(location.search).get('dspace'); if(ko) document.querySelectorAll('img[alt="Koha mockup"]').forEach(i=>i.src=decodeURIComponent(ko)); if(ds) document.querySelectorAll('img[alt="DSpace mockup"]').forEach(i=>i.src=decodeURIComponent(ds));})();
   </script>
 </body>
 </html>
