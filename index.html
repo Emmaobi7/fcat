@@ -451,13 +451,13 @@
         }
 
         // Quick customization helper - replace university name easily
-        function setUniversityName() {
-          const el = document.getElementById('uni-name');
-          const stored = new URLSearchParams(location.search).get('school');
-          if(stored) el.textContent = decodeURIComponent(stored);
-          else el.textContent = 'FCAT';
-        }
-        setUniversityName();
+        // function setUniversityName() {
+        //   const el = document.getElementById('uni-name');
+        //   const stored = new URLSearchParams(location.search).get('school');
+        //   if(stored) el.textContent = decodeURIComponent(stored);
+        //   else el.textContent = 'FCAT';
+        // }
+        // setUniversityName();
 
         // Simple modal system
         const modalRoot = document.getElementById('modal-root');
@@ -628,5 +628,6 @@ Syncs once they reconnect.</div>
   </script>
 </body>
 </html>
+
 
 
