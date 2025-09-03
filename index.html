@@ -107,7 +107,7 @@
               <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(180deg,#052a3a,#01303e);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)">K+D</div>
               <div>
                 <div class="muted">Unified Library Solution</div>
-                <h1 class="grad-title">Transforming <span id="un-name">FCAT</span> Library into a 21st‑Century Knowledge Hub</h1>
+                <h1 class="grad-title">Transforming <span id="uni-name">FCAT</span> Library into a 21st‑Century Knowledge Hub</h1>
                 <p class="lead">A unified solution combining <strong>Koha</strong> for physical collections and <strong>DSpace</strong> for digital assets — search, manage and preserve academic resources with ease.</p>
                 <div class="cta-row">
                   <button class="btn pulse" id="see-plan">See the Plan</button>
@@ -455,7 +455,7 @@
           const el = document.getElementById('uni-name');
           const stored = new URLSearchParams(location.search).get('school');
           if(stored) el.textContent = decodeURIComponent(stored);
-          else el.textContent = '[University Name]';
+          else el.textContent = 'FCAT';
         }
         setUniversityName();
 
@@ -628,4 +628,5 @@ Syncs once they reconnect.</div>
   </script>
 </body>
 </html>
+
 
